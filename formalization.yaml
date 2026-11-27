@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Additive VC_2 Dimension of Convex Sets in R^3"
+  description: >-
+    A complete, elementary Lean 4 proof that every convex set in R^3 has additive
+    VC_2-dimension at most 2, settling the open conjecture
+    VCDimConvex.hasAddVCNDimAtMost_two_two_of_convex_r3 from Google DeepMind's
+    Formal Conjectures repository. Combined with Kenta Kitamura's 2x2 lower bound,
+    this determines the exact value VC_2(convex sets in R^3) = 2 (improving the
+    previous finite upper bound of 2^128 - 1). The proof uses no topology, no
+    Hahn-Banach theorem, and no closedness assumptions on C: it shows no coplanar
+    2x3 grid is in convex position, reduces any non-degenerate 3x3 grid via an
+    explicit invertible affine map to paraboloid normal form, and derives a 4-point
+    convex combination contradiction from just two 7-point masks.
+  authors:
+    - "n1ghtr1der365"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "n1ghtr1der365"
+
+classification:
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["52A15", "05D05"]
+
+sources:
+  - title: "Elementary 2-mask proof that VC_2(convex sets in R^3) <= 2"
+    type: "original-proof"
+    relationship: "other"
+    note: "First presentation and Lean 4 formalization of the elementary proof settling the open conjecture."
+  - title: "Formal Conjectures: VCDimConvex.hasAddVCNDimAtMost_two_two_of_convex_r3"
+    id: "https://github.com/google-deepmind/formal-conjectures/blob/ea8e3e198ded6fc73efb7f5653b74b28ac4ae1a8/FormalConjectures/Other/VCDimConvex.lean#L69-L72"
+    type: "formalization"
+    location: "https://github.com/google-deepmind/formal-conjectures"
+    relationship: "background"
+    license: "Apache-2.0"
+    note: "Statement of the open conjecture targeted by this proof."
+
+related_formalizations:
+  - id: "https://github.com/KitaKen1/vcdim-convex-counterexample"
+    relationship: "independent"
+    note: "Establishes the matching lower bound VC_2(convex sets in R^3) >= 2 via a 2x2 grid."
+  - id: "https://github.com/KitaKen1/vcdim-convex-finite-bound"
+    relationship: "supersedes"
+    note: "Proves the general finite upper bound d = 2^(8*(n+2)^n) - 1 (which gives 2^128 - 1 for n = 2); our proof sharpens n = 2 to the exact value 2."
+
+status:
+  scope: >-
+    Fully proves VCDimConvex.hasAddVCNDimAtMost_two_two_of_convex_r3 with no
+    extra hypotheses (C is an arbitrary convex subset of EuclideanSpace R (Fin 3),
+    not assumed closed, bounded, or polyhedral). Also includes an independent
+    Python exact-integer certificate (cert_2x3.json) showing a 2x3 prism is
+    shatterable by a 13-halfspace polytope, demonstrating minimality of 3x3.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Antigravity"]
+      framework: "Antigravity"
+      tool_setup: "Human-guided AI-assisted mathematical discovery, numerical verification in Python/NumPy, and Lean 4.35.0-rc2 formalization compiled via Lake."
+      cost:
+        wall_time: "approx. 4 hours"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: "Iterative human-in-the-loop conjecture exploration (first attempting counterexample search, then discovering and formalizing the 2-mask contradiction proof)."
+  spend_usd: "subscription-based"
+  notes: "All Lean 4 proofs were kernel-checked with Lean 4.35.0-rc2 (0 errors, 0 warnings, 0 sorry) and independently audited."
+
+fidelity:
+  divergences: "none known; Challenge.lean reproduces HasAddVCNDimAtMost verbatim from FormalConjecturesForMathlib/Combinatorics/Additive/VCDim.lean and states the exact theorem signature from FormalConjectures/Other/VCDimConvex.lean using Mathlib's EuclideanSpace R (Fin 3)."
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "n1ghtr1der365"
+  notes: "Verified zero sorry and standard axioms via Lean 4.35.0-rc2 kernel check, independent numerical checks of Lemmas 1 and 3 across 110,000 random grids, and secondary agent review of statement fidelity and proof structure."
+
+alignment:
+  namespace: "VCDimConvex"
+  statements:
+    - source: "FormalConjectures/Other/VCDimConvex.lean: hasAddVCNDimAtMost_two_two_of_convex_r3"
+      lean: "VCDimConvex.hasAddVCNDimAtMost_two_two_of_convex_r3"
+      module: "Challenge"
+      status: "proved"
+      note: "Exact match to the Formal Conjectures open conjecture statement."
+
+acknowledgements: "Google DeepMind Formal Conjectures authors, Kenta Kitamura for prior bounds on VCDimConvex, and the Lean 4 and Mathlib communities."

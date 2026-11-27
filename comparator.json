@@ -1,0 +1,8 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": ["VCDimConvex.hasAddVCNDimAtMost_two_two_of_convex_r3"],
+  "definition_names": ["VCDimConvex.HasAddVCNDimAtMost"],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}
